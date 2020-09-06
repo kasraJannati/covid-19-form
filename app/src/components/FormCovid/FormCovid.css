@@ -1,0 +1,12 @@
+.redLine{
+    color:red;
+    font-weight:700;
+    text-align: left;
+    display: inline-block;
+    margin: 10px auto;
+}
+
+.bottomPart{
+  
+    font-size:20px;
+}
