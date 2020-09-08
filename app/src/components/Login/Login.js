@@ -3,6 +3,11 @@ import { Button, Form, Container } from "react-bootstrap";
 import styles from "./Login.css";
 import { useHistory } from "react-router-dom";
 
+import axios from 'axios';
+
+
+
+
 function Login() {
   let history = useHistory();
   const [users, setUsers] = useState([]);
@@ -14,12 +19,22 @@ function Login() {
   }, []);
 
   const getUsers = () =>{
-    fetch('http://localhost:4000/users')
-    .then(response => response.json())
-    .then(({user}) => {
-      setUsers(user);
-    })
-    .catch(err => console.log(err))
+
+        
+
+      fetch('http://localhost:4000/users')
+      .then(response => response.json())
+
+      .then(({user}) => {
+        console.log(user)
+        setUsers(user);
+      })
+      .catch(err => console.log(err))
+
+
+
+
+   
   }
 
   function validateForm() {
@@ -28,9 +43,7 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-  }
 
-  function login() {
     for (let i = 0; i < users.length; i++) {
       if(users[i].password == password){
         setError('');
@@ -46,7 +59,10 @@ function Login() {
         setError('password is wrong!');
       }
     }
+
   }
+
+
 
   return (
     <div className="loginPage">
@@ -62,7 +78,7 @@ function Login() {
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password"  value={password} onChange={e => setPassword(e.target.value)} />
           </Form.Group>
-          <Button variant="primary" disabled={!validateForm()} type="submit" onClick={login}>
+          <Button variant="primary" disabled={!validateForm()} type="submit">
             Login
           </Button>
           {error}
