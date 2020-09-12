@@ -1,7 +1,13 @@
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors'); // To fix *Access to XMLHttpRequest* error 
 const mysql = require('mysql');
 const app = express();
+
+
+app.use(cors()); // To fix *Access to XMLHttpRequest* error 
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 const SELECT_ALL_PRODUCTS_QUERY = 'SELECT * FROM users';
 const SELECT_ALL_STATUS_QUERY = 'SELECT * FROM status';
@@ -21,22 +27,31 @@ connection.connect(err => {
 
 // console.log(connection);
 
-app.use(cors());
+// app.use(cors());
 
 app.get('/',(req,res) => {
-    res.send('go to /users')
+    res.send('go to /login')
 });
 
 
 
 
-app.get('/users', (req,res) => {
+app.post('/login', (req,res) => {
 
-    connection.query(SELECT_ALL_PRODUCTS_QUERY, (err, results) => {
+
+    // console.log('Got body:', req);
+    // console.log('Got body:', req.params);
+    console.log('Got body:', req.body.pin);
+
+    // res.send({success: true});
+    res.send(req.body);
+    connection.query("SELECT * from users WHERE password ="+req.body.pin, (err, results) => {
         if(err){
+            console.log('error')
             return res.send(err);
         }
         else {
+            console.log('ok')
             return res.json({
                 user: results
             })

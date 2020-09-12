@@ -22,14 +22,14 @@ function Login() {
 
         
 
-      fetch('http://localhost:4000/users')
-      .then(response => response.json())
+      // fetch('http://localhost:4000/users')
+      // .then(response => response.json())
 
-      .then(({user}) => {
-        console.log(user)
-        setUsers(user);
-      })
-      .catch(err => console.log(err))
+      // .then(({user}) => {
+      //   console.log(user)
+      //   setUsers(user);
+      // })
+      // .catch(err => console.log(err))
 
 
 
@@ -42,23 +42,10 @@ function Login() {
   }
 
   function handleSubmit(event) {
-    event.preventDefault();
 
-    for (let i = 0; i < users.length; i++) {
-      if(users[i].password == password){
-        setError('');
-        history.push({
-          pathname: '/form',
-          search: '?name='+users[i].name,
-          state: users[i]
-        });
-        // store.set('loggedIn', true);
-        break;
-      }
-      else{
-        setError('password is wrong!');
-      }
-    }
+    event.preventDefault();
+    axios.post('http://localhost:4000/login', {pin: password})
+    .then(response => console.log(response,'response'));
 
   }
 
@@ -67,11 +54,11 @@ function Login() {
   return (
     <div className="loginPage">
      
-      <ul>
+      {/* <ul>
         {users.map((user) => (
           <li key={user.user_id}>Name: {user.name} - Pass: {user.password}</li>
         ))}
-      </ul>
+      </ul> */}
       <Container>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="password">
