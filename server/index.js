@@ -45,18 +45,26 @@ app.post('/login', (req,res) => {
 
     // res.send({success: true});
     res.send(req.body);
-    connection.query("SELECT * from users WHERE password ="+req.body.pin, (err, results) => {
+    connection.query("SELECT * FROM users WHERE password ="+ req.body.pin, (err, results) => {
+        console.log(results)
         if(err){
             console.log('error')
-            return res.send(err);
+            // return res.send(err);
         }
         else {
-            console.log('ok')
-            return res.json({
-                user: results
-            })
+            console.log(results)
+            // return res.json({
+            //     user: results
+            // })
         }
     });
+
+   
+
+  
+
+      
+
 
 });
 
